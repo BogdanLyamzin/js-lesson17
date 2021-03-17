@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        html {
+            height: 200vh;
+        }
+
+        .btn-example {
+            position: absolute;
+            bottom: -500px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #000;
+            text-decoration: none;
+            color: white;
+            font-family: Arial;
+            display: inline-block;
+            padding: 10px 15px;
+        }
+
+        .btn-example.active {
+            background-color: orange;
+        }
+
+    </style>
+</head>
+
+<body>
+<div style="height: 100vh;"></div>
+<a href="#" id="btn-example" class="btn-example">Click me!</a>
+
+<script>
+
+    const btn = document.getElementById("btn-example");
+
+    // btn.addEventListener("click", function(event) {
+    //     e.preventDefault(); // event.preventDefault() -
+    //     // метод, отменяющий стандартную реакцию браузера
+    //     // на событие ДЛЯ ЭТОГО ТЕГА. В случае со ссылкой это - переход на другую страницу
+    //     e.target.classList.toggle("active");
+    // });
+
+</script>
+</body>
+
+</html>

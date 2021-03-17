@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .text-field.focus {
+            border: 1px solid red;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <input class="text-field" type="text" id="user-name" placeholder="Введите имя пользователя">
+    <script>
+        const userNameField = document.getElementById("user-name");
+        userNameField.addEventListener("focus", function () {
+            this.classList.add("focus")
+        });
+        userNameField.addEventListener("blur", function () {
+            if(this.value.length < 3) {
+                const errorMsg = document.createElement("p");
+                errorMsg.classList.add("error-message");
+                errorMsg.textContent = "В поле ввода должно быть минимум 3 символа";
+                this.after(errorMsg);
+            }
+            else {
+                const nextElem = this.nextElementSibling;
+                nextElem.classList.remove("error-message");
+                if(nextElem.classList.contains("error-message")) {
+                    nextElem.classList.remove("error-message");
+                }
+            }
+            this.classList.remove("focus");
+        })
+/*
+        userNameField.addEventListener("keypress", function () {
+            console.log(this.value);
+        });
+*/
+/*
+        userNameField.addEventListener("keyup", function () {
+            console.log(this.value);
+        });
+     */
+
+    </script>
+</body>
+</html>
