@@ -13,7 +13,7 @@
             list-style: none;
         }
 
-        .top-menu {
+        .navbar {
             display: flex;
             justify-content: center;
         }
@@ -58,7 +58,7 @@
 </head>
 
 <body>
-    <div class="top-menu">
+    <nav class="navbar" id="navbar">
         <ul class="navbar-nav" id="top-menu">
             <li class="navbar-nav-item">
                 <a href="#" class="navbar-nav-link">HOME</a>
@@ -88,17 +88,26 @@
         // в первый аргумент всегда сохранится ссылка на объект,
         // описывающий произошедшее событие полностью
         topMenu.addEventListener("click", function(event) {
+            event.preventDefault();
             console.log(event) // event - объект, описывающий произошедшее событие полностью
             console.log(event.target); // e.target - ссылка на элемент, на котором конкретно проиизошло событие (пункт меню)
             console.log(this); // this - ссылка на элемент, на который мы повесили обработчик события (все меню)
-            const menuLinks = this.getElementsByClassName("navbar-nav-link");
-            for (let i = 0; i < menuLinks.length; i++) {
-                menuLinks[i].classList.remove("active");
-            }
-            event.target.classList.add("active")
+            const links = this.querySelectorAll(".active");
+            links.forEach(elem => elem.classList.remove("active"));
+            // const prevActiveElement = this.querySelector(".active");
+            // if(prevActiveElement){
+            //     prevActiveElement.classList.remove("active")
+            // }
+            event.target.classList.add("active");
+            event.stopPropagation();
         });        
 
-
+        const navbar = document.getElementById("navbar");
+        navbar.addEventListener("click", function(){
+            if(event.target === event.currentTarget) {
+                console.log("Navbar click");
+            }
+        })
 
     </script>
 </body>

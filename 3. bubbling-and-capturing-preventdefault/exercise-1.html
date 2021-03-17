@@ -84,7 +84,10 @@
 
 </ol>
 <form action="" id="add-case">
-    <input type="text" name="case-name" class="form-control">
+    <div class="form-group">
+        <input type="text" name="case-name" class="form-control">
+    </div>
+    
     <select name="case-urgency">
         <option value="normal">Обычная</option>
         <option value="high">Высокая</option>
@@ -100,7 +103,48 @@
 Везде нужно использовать всплытие и перехват.  -->
 
 <script>
+        const caseAddForm = document.getElementById("add-case");
+        const caseList = document.getElementById("case-list");
 
+        caseAddForm.addEventListener("submit", function(e){
+            e.preventDefault();
+            const caseItem = this.querySelector("[name=case-name]");
+            if(caseItem.value){
+                const caseName = caseItem.value;
+                const caseUrgencyItem = this.querySelector("[name=case-urgency]");
+                const caseUrgency = caseUrgencyItem.value;
+                const caseElement = createCase(caseName, caseUrgency)
+                caseList.append(caseElement);
+                caseItem.value = "";
+            }
+            else {
+                caseItem.insertAdjacentHTML("afterend", `
+                <p class="form-error-message" style="color: red">
+                    Дело не должно быть пустым </p>`);
+            }
+        });
+
+        const caseFormField = caseAddForm.querySelector("[name=case-name]");
+        caseFormField.addEventListener("focus", function(){
+            const parent = this.closest(".form-group");
+            const errorMessage = parent.querySelector(".form-error-message");
+            if(errorMessage){
+                errorMessage.remove();
+            }
+        })
+
+        function createCase(name, urgency){
+            const element = document.createElement("li");
+            element.classList.add("case-item");
+            element.insertAdjacentHTML("beforeend", `${name} - ${urgency}.
+                <span class="close">X</span>`);
+            element.addEventListener("click", function(e){
+                if(e.target.classList.contains("close")){
+                    this.remove()
+                }
+            });
+            return element;
+        } 
 
 </script>
 

@@ -84,7 +84,9 @@
 
     </ol>
     <form action="" id="add-case">
-        <input type="text" name="case-name" class="form-control">
+        <div class="form-group">
+            <input type="text" name="case-name" class="form-control">
+        </div>
         <select name="case-urgency">
             <option value="normal">Обычная</option>
             <option value="high">Высокая</option>
@@ -98,8 +100,34 @@
       -->
 
     <script>
+        const caseAddForm = document.getElementById("add-case");
+        const caseList = document.getElementById("case-list");
 
+        caseAddForm.addEventListener("submit", function(e){
+            e.preventDefault();
+            const caseItem = this.querySelector("[name=case-name]");
+            if(caseItem.value){
+                const caseName = caseItem.value;
+                const caseUrgencyItem = this.querySelector("[name=case-urgency]");
+                const caseUrgency = caseUrgencyItem.value;
+                caseList.insertAdjacentHTML("beforeend", `<li>${caseName} - ${caseUrgency}</li>`);
+                caseItem.value = "";
+            }
+            else {
+                caseItem.insertAdjacentHTML("afterend", `
+                <p class="form-error-message" style="color: red">
+                    Дело не должно быть пустым </p>`);
+            }
+        });
 
+        const caseFormField = caseAddForm.querySelector("[name=case-name]");
+        caseFormField.addEventListener("focus", function(){
+            const parent = this.closest(".form-group");
+            const errorMessage = parent.querySelector(".form-error-message");
+            if(errorMessage){
+                errorMessage.remove();
+            }
+        })
     </script>
 
 

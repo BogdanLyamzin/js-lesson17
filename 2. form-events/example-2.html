@@ -7,6 +7,10 @@
         .form-group {
             margin-bottom: 15px;
         }
+
+        .form-error-message {
+          color: red;
+        }
     </style>
 </head>
 <body>
@@ -33,16 +37,21 @@
         e.preventDefault();
         const login = this.querySelector("[name=login]");
         if(login.value.length < 6) {
-            const errorMessage = document.createElement("p");
-            errorMessage.textContent = "В логине должно быть минимум 6 символов";
-            errorMessage.style.color = "red";
-            login.after(errorMessage);
+          login.insertAdjacentHTML("afterend", `
+              <p class="form-error-message">В логине должно быть 
+                минимум 6 символов</p>`);
         }
-    })
-    // change - input
-    // change - select
-    // input - input
-    // submit -
+    });
+
+    const loginFormField = loginForm.querySelector("[name=login]");
+    loginFormField.addEventListener("focus", function(){
+      const formGroup = this.closest(".form-group");
+      const errorMessage = formGroup.querySelector(".form-error-message");
+      if(errorMessage) {
+        errorMessage.remove();
+      }
+    });
+
 </script>
 </body>
 </html>
